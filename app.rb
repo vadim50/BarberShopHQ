@@ -3,7 +3,7 @@ require 'sinatra'
 require 'sqlite3'
 require 'sinatra/activerecord'
 
-set :datebase, "sqlite3:barbershop.db"
+set :database, "sqlite3:barbershop.db"
 
 class Client < ActiveRecord::Base
 
