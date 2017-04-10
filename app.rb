@@ -1,64 +1,54 @@
 require 'rubygems'
 require 'sinatra'
 require 'sqlite3'
+require 'sinatra/activerecord'
 
+set :datebase, "sqlite3:barbershop.db"
 
+class Client < ActiveRecord::Base
 
-def init_db
-	@db = SQLite3::Database.new 'leprosorium.db'
-	@db.results_as_hash = true 
 end
 
 
-before do
-	# индициализация БД
-	init_db
-end
+# def init_db
+# 	@db = SQLite3::Database.new 'leprosorium.db'
+# 	@db.results_as_hash = true 
+# end
 
-configure do
-	# инициализация БД
-	init_db
 
-	# создает таблицу если таблица не существует
-	@db.execute 'create table if not exists Posts
-	(
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		created_date DATE,
-		content TEXT
-	)'
+# before do
+# 	# индициализация БД
+# 	init_db
+# end
 
-	# создает таблицу если таблица не существует
-	@db.execute 'create table if not exists Comments
-	(
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		created_date DATE,
-		content TEXT,
-		post_id integer
-	)'
-end
+# configure do
+# 	# инициализация БД
+# 	init_db
+
+# 	# создает таблицу если таблица не существует
+# 	@db.execute 'create table if not exists Posts
+# 	(
+# 		id INTEGER PRIMARY KEY AUTOINCREMENT,
+# 		created_date DATE,
+# 		content TEXT
+# 	)'
+
+# 	# создает таблицу если таблица не существует
+# 	@db.execute 'create table if not exists Comments
+# 	(
+# 		id INTEGER PRIMARY KEY AUTOINCREMENT,
+# 		created_date DATE,
+# 		content TEXT,
+# 		post_id integer
+# 	)'
+# end
 
 
 get '/' do
-	@results = @db.execute 'select * from Posts order by id desc'
-	erb :index
+	erb "Hello!"
 end
 
-get '/new' do
-	erb :new
-end
 
-post '/new' do
-	content = params[:content]
-	if content.length <= 0
-		@error = 'Enter post text'
-
-		return erb :new
-	end
-
-	@db.execute 'insert into Posts(content, created_date) values(?, datetime())',[content]
-
-	erb "You Message: #{content}"
-end
 
 
 
