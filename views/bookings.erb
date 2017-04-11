@@ -1,0 +1,6 @@
+<h2>Clients List.</h2>
+<% @clients.each do |client| %>
+	<p><%= client.name %></p>
+	<a href="/booking/<%= client.id %>">Read More</a>
+	<hr>
+	<p><% end %>
