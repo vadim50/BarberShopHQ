@@ -13,47 +13,38 @@ class Barber < ActiveRecord::Base
 
 end
 
-
-# def init_db
-# 	@db = SQLite3::Database.new 'leprosorium.db'
-# 	@db.results_as_hash = true 
-# end
-
-
-# before do
-# 	# индициализация БД
-# 	init_db
-# end
-
-# configure do
-# 	# инициализация БД
-# 	init_db
-
-# 	# создает таблицу если таблица не существует
-# 	@db.execute 'create table if not exists Posts
-# 	(
-# 		id INTEGER PRIMARY KEY AUTOINCREMENT,
-# 		created_date DATE,
-# 		content TEXT
-# 	)'
-
-# 	# создает таблицу если таблица не существует
-# 	@db.execute 'create table if not exists Comments
-# 	(
-# 		id INTEGER PRIMARY KEY AUTOINCREMENT,
-# 		created_date DATE,
-# 		content TEXT,
-# 		post_id integer
-# 	)'
-# end
+before do
+	@barbers = Barber.order "created_at DESC"
+end
 
 
 get '/' do
-	@barbers = Barber.order "created_at DESC"
+	
 	erb :index
 end
 
 
+get '/visit' do
+	
+	erb :visit
+end
 
+post '/visit' do
+	@username = params[:username]
+	@phone = params[:phone]
+	@datetime = params[:datetime]
+	@barber = params[:barber]
+	@color = params[:color]
+
+	c = Client.new
+	c.name = @username
+	c.phone = @phone
+	c.datestamp = @datetime
+	c.barber = @barber
+	c.color = @color
+	c.save
+
+	erb "<h2>Thank you #{@username}</h2>"
+end
 
 
