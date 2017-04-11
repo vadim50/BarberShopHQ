@@ -9,6 +9,10 @@ class Client < ActiveRecord::Base
 
 end
 
+class Barber < ActiveRecord::Base
+
+end
+
 
 # def init_db
 # 	@db = SQLite3::Database.new 'leprosorium.db'
